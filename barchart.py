@@ -4,9 +4,15 @@ import plotly.express as px
 import numpy as np
 
 
+def verify_value(val, limit=9):
+    if val > limit:
+        return verify_value(val - limit)
+    return val
+
+
 def plotly_barcharts_3d(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1, color='x',
                         x_legend='auto', y_legend='auto', z_legend='auto', flat_shading=True,
-                        x_title='', y_title='', z_title='', *title):
+                        x_title='', y_title='', z_title='', hover_info='z', *title):
     """
     Convert a dataframe in 3D barcharts similar to matplotlib ones
         Example :
@@ -33,6 +39,8 @@ def plotly_barcharts_3d(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1
     :param x_title: Title of x axis
     :param y_title: Title of y axis
     :param z_title: Title of z axis
+    :param hover_info: Hover info, z by default
+
     :return: 3D mesh figure acting as 3D barcharts
     """
 
@@ -41,20 +49,20 @@ def plotly_barcharts_3d(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1
 
     mesh_list = []
     colors = px.colors.qualitative.Plotly
+    color_value = 0
 
     for idx, x_data in enumerate(x_df.unique()):
-        idx2 = 0
         if color == 'x':
-            colorValue = colors[idx]
-        elif color == 'x+y':
-            colorValue = colors[idx + idx2]
+            color_value = colors[verify_value(idx)]
 
         for idx2, y_data in enumerate(y_df.unique()):
             if color == 'x+y':
-                colorValue = colors[idx + idx2]
+                print(verify_value(idx + idx2 * len(y_df.unique())))
+                color_value = colors[verify_value(idx + idx2 * len(y_df.unique()))]
 
             elif color == 'y':
-                colorValue = colors[idx2]
+                color_value = colors[verify_value(idx2)]
+
             x_max = x_min + step
             y_max = y_min + step
 
@@ -65,12 +73,14 @@ def plotly_barcharts_3d(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1
                     x=[x_min, x_min, x_max, x_max, x_min, x_min, x_max, x_max],
                     y=[y_min, y_max, y_max, y_min, y_min, y_max, y_max, y_min],
                     z=[z_min, z_min, z_min, z_min, z_max, z_max, z_max, z_max],
-                    color=colorValue,
+                    color=color_value,
                     i=[7, 0, 0, 0, 4, 4, 6, 6, 4, 0, 3, 2],
                     j=[3, 4, 1, 2, 5, 6, 5, 2, 0, 1, 6, 3],
                     k=[0, 7, 2, 3, 6, 7, 1, 1, 5, 5, 7, 6],
                     opacity=1,
                     flatshading=flat_shading,
+                    hovertext='text',
+                    hoverinfo=hover_info,
                 ))
 
             x_min += 2 * step
