@@ -66,7 +66,7 @@ def plotly_barcharts_3d(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1
             x_max = x_min + step
             y_max = y_min + step
 
-            z_max = z_df[idx + idx2]
+            z_max = z_df[idx + idx2 * len_y_df_uniq]
 
             mesh_list.append(
                 go.Mesh3d(
