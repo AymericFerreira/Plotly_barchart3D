@@ -51,14 +51,19 @@ def plotly_barcharts_3d(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1
     colors = px.colors.qualitative.Plotly
     color_value = 0
 
-    for idx, x_data in enumerate(x_df.unique()):
+    x_df_uniq = x_df.unique()
+    y_df_uniq = y_df.unique()
+    len_x_df_uniq = len(x_df_uniq)
+    len_y_df_uniq = len(y_df_uniq)
+
+    for idx, x_data in enumerate(x_df_uniq):
         if color == 'x':
             color_value = colors[verify_value(idx)]
 
-        for idx2, y_data in enumerate(y_df.unique()):
+        for idx2, y_data in enumerate(y_df_uniq):
             if color == 'x+y':
-                print(verify_value(idx + idx2 * len(y_df.unique())))
-                color_value = colors[verify_value(idx + idx2 * len(y_df.unique()))]
+                print(verify_value(idx + idx2 * len_y_df_uniq))
+                color_value = colors[verify_value(idx + idx2 * len_y_df_uniq)]
 
             elif color == 'y':
                 color_value = colors[verify_value(idx2)]
@@ -89,10 +94,10 @@ def plotly_barcharts_3d(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1
     y_min = 0
 
     if x_legend == 'auto':
-        x_legend = x_df.unique()
+        x_legend = x_df_uniq
         x_legend = [str(x_ax) for x_ax in x_legend]
     if y_legend == 'auto':
-        y_legend = y_df.unique()
+        y_legend = y_df_uniq
         y_legend = [str(y_ax) for y_ax in y_legend]
     if z_legend == 'auto':
         z_legend = None
@@ -104,12 +109,12 @@ def plotly_barcharts_3d(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1
             xaxis=dict(
                 tickmode='array',
                 ticktext=x_legend,
-                tickvals=np.arange(x_min, len(x_df.unique()) * 2, step=2),
+                tickvals=np.arange(x_min, len_x_df_uniq * 2, step=2),
                 title=x_title),
             yaxis=dict(
                 tickmode='array',
                 ticktext=y_legend,
-                tickvals=np.arange(y_min, len(y_df.unique()) * 2, step=2),
+                tickvals=np.arange(y_min, len_y_df_uniq * 2, step=2),
                 title=y_title)))
 
     else:
@@ -117,12 +122,12 @@ def plotly_barcharts_3d(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1
             xaxis=dict(
                 tickmode='array',
                 ticktext=x_legend,
-                tickvals=np.arange(x_min, len(x_df.unique()) * 2, step=2),
+                tickvals=np.arange(x_min, len_x_df_uniq * 2, step=2),
                 title=x_title),
             yaxis=dict(
                 tickmode='array',
                 ticktext=y_legend,
-                tickvals=np.arange(y_min, len(y_df.unique()) * 2, step=2),
+                tickvals=np.arange(y_min, len_y_df_uniq * 2, step=2),
                 title=y_title)),
             zaxis=dict(
                 tickmode='array',
