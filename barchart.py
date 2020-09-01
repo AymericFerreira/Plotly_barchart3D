@@ -53,7 +53,7 @@ def plotly_barcharts_3d(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1
 
     for idx, x_data in enumerate(x_df.unique()):
         if color == 'x':
-            color_value = colors[verify_value(idx)]
+            color_value = colors[idx % 9]
 
         for idx2, y_data in enumerate(y_df.unique()):
             if color == 'x+y':
