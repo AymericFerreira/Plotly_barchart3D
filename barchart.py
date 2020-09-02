@@ -4,12 +4,6 @@ import plotly.express as px
 import numpy as np
 
 
-def verify_value(val, limit=9):
-    if val > limit:
-        return verify_value(val - limit)
-    return val
-
-
 def plotly_barcharts_3d(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1, color='x',
                         x_legend='auto', y_legend='auto', z_legend='auto', flat_shading=True,
                         x_title='', y_title='', z_title='', hover_info='z', *title):
@@ -57,11 +51,10 @@ def plotly_barcharts_3d(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1
 
         for idx2, y_data in enumerate(y_df.unique()):
             if color == 'x+y':
-                print(verify_value(idx + idx2 * len(y_df.unique())))
-                color_value = colors[verify_value(idx + idx2 * len(y_df.unique()))]
+                color_value = colors[(idx + idx2 * len(y_df.unique())) % 9]
 
             elif color == 'y':
-                color_value = colors[verify_value(idx2)]
+                color_value = colors[idx2 % 9]
 
             x_max = x_min + step
             y_max = y_min + step
