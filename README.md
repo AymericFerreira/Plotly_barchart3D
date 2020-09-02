@@ -10,8 +10,8 @@ Minimal example
 from barChartPlotly import plotly_barcharts_3d
 import pandas as pd
 
-xdf = pd.Series([1, 1, 10, 10])
-ydf = pd.Series([2, 4, 2, 4])
+xdf = pd.Series([1, 10])
+ydf = pd.Series([2, 4])
 zdf = pd.Series([10, 30, 20, 45])
 
 fig = plotly_barcharts_3d(xdf, ydf, zdf, color='x+y')
