@@ -13,10 +13,9 @@ def plotly_barcharts_3d(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1
         x_df = pd.Series([1, 1, 10, 10])
         y_df = pd.Series([2, 4, 2 ,4])
         z_df = pd.Series([10, 30, 20, 45])
-
-    :param x_df: Serie of data corresponding to x axis
-    :param y_df: Serie of data corresponding to y axis
-    :param z_df: Serie of data corresponding to height of the bar chart
+    :param x_df: Serie or list of data corresponding to x axis
+    :param y_df: Serie or list  of data corresponding to y axis
+    :param z_df: Serie or list  of data corresponding to height of the bar chart
     :param x_min: Starting position for x axis
     :param y_min: Starting position for y axis
     :param z_min: Minimum value of the barchart, if set to auto minimum value is 0.8 * minimum of z_df to obtain more
@@ -34,9 +33,9 @@ def plotly_barcharts_3d(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1
     :param y_title: Title of y axis
     :param z_title: Title of z axis
     :param hover_info: Hover info, z by default
-
     :return: 3D mesh figure acting as 3D barcharts
     """
+    z_df = list(pd.Series(z_df))
 
     if z_min == 'auto':
         z_min = 0.8 * min(z_df)
@@ -45,8 +44,8 @@ def plotly_barcharts_3d(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1
     colors = px.colors.qualitative.Plotly
     color_value = 0
 
-    x_df_uniq = x_df.unique()
-    y_df_uniq = y_df.unique()
+    x_df_uniq = np.unique(x_df)
+    y_df_uniq = np.unique(y_df)
     len_x_df_uniq = len(x_df_uniq)
     len_y_df_uniq = len(y_df_uniq)
 
@@ -97,35 +96,30 @@ def plotly_barcharts_3d(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1
 
     fig = go.Figure(mesh_list)
 
+    fig.update_layout(scene=dict(
+        xaxis=dict(
+            tickmode='array',
+            ticktext=x_legend,
+            tickvals=np.arange(x_min, len_x_df_uniq * 2, step=2),
+            title=x_title),
+        yaxis=dict(
+            tickmode='array',
+            ticktext=y_legend,
+            tickvals=np.arange(y_min, len_y_df_uniq * 2, step=2),
+            title=y_title),
+        zaxis=dict(title=z_title)))
     if z_legend is None:
         fig.update_layout(scene=dict(
-            xaxis=dict(
-                tickmode='array',
-                ticktext=x_legend,
-                tickvals=np.arange(x_min, len_x_df_uniq * 2, step=2),
-                title=x_title),
-            yaxis=dict(
-                tickmode='array',
-                ticktext=y_legend,
-                tickvals=np.arange(y_min, len_y_df_uniq * 2, step=2),
-                title=y_title)))
-
-    else:
-        fig.update_layout(scene=dict(
-            xaxis=dict(
-                tickmode='array',
-                ticktext=x_legend,
-                tickvals=np.arange(x_min, len_x_df_uniq * 2, step=2),
-                title=x_title),
-            yaxis=dict(
-                tickmode='array',
-                ticktext=y_legend,
-                tickvals=np.arange(y_min, len_y_df_uniq * 2, step=2),
-                title=y_title)),
             zaxis=dict(
                 tickmode='array',
                 ticktext=z_legend,
-                tickvals='',
-                title=z_title))
+                title=z_title)))
 
     return fig
+
+
+if __name__ == '__main__':
+    x_df = [1, 1, 10, 10]
+    y_df = [2, 4, 2, 4]
+    z_df = [10, 30, 20, 45]
+    plotly_barcharts_3d(x_df, y_df, z_df, z_title="Test").show()
