@@ -40,6 +40,7 @@ def plotly_barcharts_3d(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1
     if z_min == 'auto':
         z_min = 0.8 * min(z_df)
 
+
     mesh_list = []
     colors = px.colors.qualitative.Plotly
     color_value = 0
@@ -48,6 +49,17 @@ def plotly_barcharts_3d(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1
     y_df_uniq = np.unique(y_df)
     len_x_df_uniq = len(x_df_uniq)
     len_y_df_uniq = len(y_df_uniq)
+
+    z_temp_df = []
+
+    if len(z_df) == len_x_df_uniq and len(z_df) == len_y_df_uniq:
+        for x in range(len_x_df_uniq):
+            for y in range(len_y_df_uniq):
+                if x == y:
+                    z_temp_df.append(z_df[x])
+                else:
+                    z_temp_df.append(None)
+    z_df = z_temp_df
 
     for idx, x_data in enumerate(x_df_uniq):
         if color == 'x':
@@ -63,22 +75,39 @@ def plotly_barcharts_3d(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1
             x_max = x_min + step
             y_max = y_min + step
 
-            z_max = z_df[idx + idx2 * len_x_df_uniq]
+            z_max = z_df[idx * len_x_df_uniq + idx2]
 
-            mesh_list.append(
-                go.Mesh3d(
-                    x=[x_min, x_min, x_max, x_max, x_min, x_min, x_max, x_max],
-                    y=[y_min, y_max, y_max, y_min, y_min, y_max, y_max, y_min],
-                    z=[z_min, z_min, z_min, z_min, z_max, z_max, z_max, z_max],
-                    color=color_value,
-                    i=[7, 0, 0, 0, 4, 4, 6, 6, 4, 0, 3, 2],
-                    j=[3, 4, 1, 2, 5, 6, 5, 2, 0, 1, 6, 3],
-                    k=[0, 7, 2, 3, 6, 7, 1, 1, 5, 5, 7, 6],
-                    opacity=1,
-                    flatshading=flat_shading,
-                    hovertext='text',
-                    hoverinfo=hover_info,
-                ))
+            if z_max is not None:
+
+                mesh_list.append(
+                    go.Mesh3d(
+                        x=[x_min, x_min, x_max, x_max, x_min, x_min, x_max, x_max],
+                        y=[y_min, y_max, y_max, y_min, y_min, y_max, y_max, y_min],
+                        z=[z_min, z_min, z_min, z_min, z_max, z_max, z_max, z_max],
+                        color=color_value,
+                        i=[7, 0, 0, 0, 4, 4, 6, 6, 4, 0, 3, 2],
+                        j=[3, 4, 1, 2, 5, 6, 5, 2, 0, 1, 6, 3],
+                        k=[0, 7, 2, 3, 6, 7, 1, 1, 5, 5, 7, 6],
+                        opacity=1,
+                        flatshading=flat_shading,
+                        hovertext='text',
+                        hoverinfo=hover_info,
+                    ))
+            else:
+                mesh_list.append(
+                    go.Mesh3d(
+                        x=[x_min, x_min, x_max, x_max, x_min, x_min, x_max, x_max],
+                        y=[y_min, y_max, y_max, y_min, y_min, y_max, y_max, y_min],
+                        z=[z_min, z_min, z_min, z_min, z_max, z_max, z_max, z_max],
+                        color=color_value,
+                        i=[7, 0, 0, 0, 4, 4, 6, 6, 4, 0, 3, 2],
+                        j=[3, 4, 1, 2, 5, 6, 5, 2, 0, 1, 6, 3],
+                        k=[0, 7, 2, 3, 6, 7, 1, 1, 5, 5, 7, 6],
+                        opacity=0.01,
+                        flatshading=flat_shading,
+                        hovertext='text',
+                        hoverinfo=hover_info,
+                    ))
 
             x_min += 2 * step
         y_min += 2 * step
@@ -119,7 +148,8 @@ def plotly_barcharts_3d(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1
 
 
 if __name__ == '__main__':
-    x_df = [1, 1, 10, 10]
-    y_df = [2, 4, 2, 4]
-    z_df = [10, 30, 20, 45]
-    plotly_barcharts_3d(x_df, y_df, z_df, z_title="Test").show()
+    features = [2, 3, 5, 10, 20]
+    neighbours = [31, 24, 10, 28, 48]
+    accuracies = [0.9727, 0.9994, 0.9994, 0.9995, 0.9995]
+    plotly_barcharts_3d(features, neighbours, accuracies,
+                        x_title="Features", y_title="Neighbours", z_title="Accuracy").show()
