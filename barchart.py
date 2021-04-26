@@ -1,4 +1,5 @@
 import pandas as pd
+import plotly
 import plotly.graph_objects as go
 import plotly.express as px
 import numpy as np
@@ -39,7 +40,6 @@ def plotly_barcharts_3d(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1
 
     if z_min == 'auto':
         z_min = 0.8 * min(z_df)
-
 
     mesh_list = []
     colors = px.colors.qualitative.Plotly
@@ -142,7 +142,8 @@ def plotly_barcharts_3d(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1
             zaxis=dict(
                 tickmode='array',
                 ticktext=z_legend,
-                title=z_title)))
+                title=z_title)),
+            template="plotly_white")
 
     return fig
 
