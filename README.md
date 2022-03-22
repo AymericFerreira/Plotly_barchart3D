@@ -7,7 +7,7 @@ Some examples :
 Minimal example
 
 ```
-from barChartPlotly import plotly_barcharts_3d
+from barchart import plotly_barcharts_3d
 import pandas as pd
 
 xdf = pd.Series([1, 10])
@@ -21,7 +21,7 @@ fig.show()
 
 It can also be use to generate bigger graph and add legends.
 ```
-from barChartPlotly import plotly_barcharts_3d
+from barchart import plotly_barcharts_3d
 import pandas as pd
 
 df = pd.read_csv('examples/dataBar.csv')
@@ -33,7 +33,7 @@ fig.show()
 ![Image medium x](https://github.com/AymericFerreira/Plotly_barchart3D/blob/master/examples/medium_x.png?raw=true)
 
 ```
-from barChartPlotly import plotly_barcharts_3d
+from barchart import plotly_barcharts_3d
 import pandas as pd
 
 df = pd.read_csv('examples/dataBar.csv')
