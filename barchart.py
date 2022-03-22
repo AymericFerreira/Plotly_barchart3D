@@ -45,10 +45,8 @@ def barcharts_from_sparsearray(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto',
     colors = px.colors.qualitative.Plotly
     color_value = 0
 
-    x_df_uniq = np.unique(x_df)
-    y_df_uniq = np.unique(y_df)
-    len_x_df_uniq = len(x_df_uniq)
-    len_y_df_uniq = len(y_df_uniq)
+    len_x_df_uniq = len(x_df)
+    len_y_df_uniq = len(y_df)
 
     z_temp_df = []
 
@@ -59,15 +57,14 @@ def barcharts_from_sparsearray(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto',
                     z_temp_df.append(z_df[x])
                 else:
                     z_temp_df.append(None)
-    z_df = z_temp_df
 
-    for idx, x_data in enumerate(x_df_uniq):
+    for idx, x_data in enumerate(x_df):
         if color == 'x':
             color_value = colors[idx % 9]
 
-        for idx2, y_data in enumerate(y_df_uniq):
+        for idx2, y_data in enumerate(y_df):
             if color == 'x+y':
-                color_value = colors[(idx + idx2 * len(y_df.unique())) % 9]
+                color_value = colors[(idx + idx2 * len_y_df_uniq) % 9]
 
             elif color == 'y':
                 color_value = colors[idx2 % 9]
@@ -75,7 +72,7 @@ def barcharts_from_sparsearray(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto',
             x_max = x_min + step
             y_max = y_min + step
 
-            z_max = z_df[idx * len_x_df_uniq + idx2]
+            z_max = z_temp_df[idx * len_x_df_uniq + idx2]
 
             if z_max is not None:
 
@@ -115,10 +112,10 @@ def barcharts_from_sparsearray(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto',
     y_min = 0
 
     if x_legend == 'auto':
-        x_legend = x_df_uniq
+        x_legend = x_df
         x_legend = [str(x_ax) for x_ax in x_legend]
     if y_legend == 'auto':
-        y_legend = y_df_uniq
+        y_legend = y_df
         y_legend = [str(y_ax) for y_ax in y_legend]
     if z_legend == 'auto':
         z_legend = None
@@ -186,6 +183,10 @@ def barcharts3d_fromarray(x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step
         mesh_list = []
         colors = px.colors.qualitative.Plotly
         color_value = 0
+
+        x_df = pd.Series(x_df)
+        y_df = pd.Series(y_df)
+        z_df = pd.Series(z_df)
 
         x_df_uniq = x_df.unique()
         y_df_uniq = y_df.unique()
