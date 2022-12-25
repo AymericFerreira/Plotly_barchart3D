@@ -24,7 +24,7 @@ jobs:
         pip install -r requirements.txt
     - name : Run Python test
       run: pytest test_barchart.py
-    - uses: actions/cache@v1
-      with:
-        path: ~/.cache/pre-commit
-        key: pre-commit|${{ env.PY }}|${{ hashFiles('.pre-commit-config.yaml') }}
+    - uses: pre-commit/action@v3.0.0
+    - uses: ./.
+      name: Run pre-commit-ci/lite-action@v1.0.0
+      if: always()
