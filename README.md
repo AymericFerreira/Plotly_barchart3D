@@ -17,7 +17,7 @@ zdf = pd.Series([10, 30, 20, 45])
 fig = plotly_barcharts_3d(xdf, ydf, zdf, color='x+y')
 fig.show()
 ```
-![Image small xy](https://github.com/AymericFerreira/Plotly_barchart3D/blob/master/examples/small_xy.png?raw=true)
+![Image small xy](https://github.com/AymericFerreira/Plotly_barchart3D/blob/main/examples/small_xy.png?raw=true)
 
 It can also be use to generate bigger graph and add legends.
 ```
@@ -30,7 +30,7 @@ fig = plotly_barcharts_3d(df['Gamma'], df['C'], df['score 1'], x_title='Gamma', 
 fig.show()
 ```
 
-![Image medium x](https://github.com/AymericFerreira/Plotly_barchart3D/blob/master/examples/medium_x.png?raw=true)
+![Image medium x](https://github.com/AymericFerreira/Plotly_barchart3D/blob/main/examples/medium_x.png?raw=true)
 
 ```
 from barchart import plotly_barcharts_3d
@@ -42,7 +42,7 @@ fig = plotly_barcharts_3d(df['Gamma'], df['C'], df['score 1'], x_title='Gamma', 
 fig.show()
 ```
 
-![Image medium xy](https://github.com/AymericFerreira/Plotly_barchart3D/blob/master/examples/medium_xy.png?raw=true)
+![Image medium xy](https://github.com/AymericFerreira/Plotly_barchart3D/blob/main/examples/medium_xy.png?raw=true)
 
 Plotly, pandas and numpy needs to be installed and are included in requirements.txt.
 ```
