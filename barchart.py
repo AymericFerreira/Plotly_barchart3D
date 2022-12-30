@@ -45,7 +45,8 @@ def create_z_grid(len_x_df_uniq, len_y_df_uniq, z_df):
 
 
 def figure_layout(
-    fig, x_legend, x_df, y_legend, y_df, x_min, len_x_df_uniq, x_title, y_title, len_y_df_uniq,
+    fig: go.Figure,
+        x_legend: str, y_legend, x_min, len_x_df_uniq, x_title, y_title, len_y_df_uniq,
     z_legend, z_title, title,
 ):
     y_min = 0
@@ -87,13 +88,15 @@ def bar_charts_from_sparse_array(
         x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1, color='x',
         x_legend='auto', y_legend='auto', z_legend='auto', flat_shading=True,
         x_title='', y_title='', z_title='', hover_info='z', title='',
-):
+) -> go.Figure:
     """
     Convert a dataframe in 3D barchart similar to matplotlib ones
-        Example :
-        x_df = pd.Series([1, 1, 10, 10])
-        y_df = pd.Series([2, 4, 2 ,4])
-        z_df = pd.Series([10, 30, 20, 45])
+    Example :
+        xdf = pd.Series([1, 10])
+        ydf = pd.Series([2, 4])
+        zdf = pd.Series([10, 30, 20, 45])
+        fig = plotly_bar_charts_3d(xdf, ydf, zdf, color='x+y')
+        fig.show()
     :param x_df: Serie or list of data corresponding to x-axis
     :param y_df: Serie or list  of data corresponding to y-axis
     :param z_df: Serie or list  of data corresponding to height of the bar chart
@@ -176,7 +179,7 @@ def bar_charts_from_sparse_array(
         z_legend = None
 
     fig = figure_layout(
-        fig, x_legend, x_df, y_legend, y_df, x_min, len_x_df_uniq, x_title, y_title, len_y_df_uniq,
+        fig, x_legend, y_legend, x_min, len_x_df_uniq, x_title, y_title, len_y_df_uniq,
         z_legend, z_title, title,
     )
 
@@ -187,7 +190,7 @@ def bar_charts3d_from_array(
         x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1, color='x',
         x_legend='auto', y_legend='auto', z_legend='auto', flat_shading=True,
         x_title='', y_title='', z_title='', hover_info='z', title='',
-):
+) -> go.Figure:
     """
     Convert a dataframe in 3D bar charts similar to matplotlib ones
         Example :
@@ -266,14 +269,14 @@ def bar_charts3d_from_array(
     fig = go.Figure(mesh_list)
 
     fig = figure_layout(
-        fig, x_legend, x_df, y_legend, y_df, x_min, len_x_df_uniq, x_title, y_title, len_y_df_uniq,
+        fig, x_legend, y_legend, x_min, len_x_df_uniq, x_title, y_title, len_y_df_uniq,
         z_legend, z_title, title,
     )
 
     return fig
 
 
-def verify_input(x, y, z):
+def verify_input(x, y, z) -> bool:
     """"
     Verify that input is valid
     """
@@ -294,6 +297,22 @@ def plotly_bar_charts_3d(
         x_legend='auto', y_legend='auto', z_legend='auto', flat_shading=True,
         x_title='', y_title='', z_title='', hover_info='z', title='',
 ):
+    """
+    Generate a barchart in 3D or a sparse barchart in 3D
+    Examples :
+        xdf = pd.Series([1, 10])
+        ydf = pd.Series([2, 4])
+        zdf = pd.Series([10, 30, 20, 45])
+        fig = plotly_bar_charts_3d(xdf, ydf, zdf, color='x+y')
+        fig.show()
+        features = [2, 3, 5, 10, 20]
+        neighbours = [31, 24, 10, 28, 48]
+        accuracies = [0.9727, 0.9994, 0.9994, 0.9995, 0.9995]
+        plotly_bar_charts_3d(
+            features, neighbours, accuracies,
+            x_title='Features', y_title='Neighbours', z_title='Accuracy',
+        ).show()
+    """
     verify_input(x_df, y_df, z_df)
     return (
         bar_charts3d_from_array(
@@ -336,18 +355,3 @@ def plotly_bar_charts_3d(
             title=title,
         )
     )
-
-
-if __name__ == '__main__':
-    features = [2, 3, 5, 10, 20]
-    neighbours = [31, 24, 10, 28, 48]
-    accuracies = [0.9727, 0.9994, 0.9994, 0.9995, 0.9995]
-    plotly_bar_charts_3d(
-        features, neighbours, accuracies,
-        x_title='Features', y_title='Neighbours', z_title='Accuracy',
-    ).show()
-    xdf = pd.Series([1, 10])
-    ydf = pd.Series([2, 4])
-    zdf = pd.Series([10, 30, 20, 45])
-    fig = plotly_bar_charts_3d(xdf, ydf, zdf, color='x+y')
-    fig.show()
