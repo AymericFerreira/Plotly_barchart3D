@@ -45,9 +45,9 @@ def create_z_grid(len_x_df_uniq, len_y_df_uniq, z_df):
 
 
 def figure_layout(
-    fig: go.Figure,
+        fig: go.Figure,
         x_legend: str, y_legend, x_min, len_x_df_uniq, x_title, y_title, len_y_df_uniq,
-    z_legend, z_title, title,
+        z_legend, z_title, title,
 ):
     y_min = 0
 
@@ -355,3 +355,18 @@ def plotly_bar_charts_3d(
             title=title,
         )
     )
+
+
+if __name__ == '__main__':
+    xdf = pd.Series([1, 10])
+    ydf = pd.Series([2, 4])
+    zdf = pd.Series([10, 30, 20, 45])
+    fig = plotly_bar_charts_3d(xdf, ydf, zdf, color='x+y')
+    fig.show()
+    features = [2, 3, 5, 10, 20]
+    neighbours = [31, 24, 10, 28, 48]
+    accuracies = [0.9727, 0.9994, 0.9994, 0.9995, 0.9995]
+    plotly_bar_charts_3d(
+        features, neighbours, accuracies,
+        x_title='Features', y_title='Neighbours', z_title='Accuracy',
+    ).show()

@@ -2,7 +2,7 @@
 ![develop workflow](https://github.com/aymericFerreira/Plotly_barchart3D/actions/workflows/develop.yaml/badge.svg?branch=develop)
 
 # Plotly 3D barchart
-Plotly doesn't provide a simple way to create 3D barcharts as matplotlib does.
+Plotly doesn't provide a simple way to create 3D bar charts as matplotlib does.
 Here is a function to create them easily via Mesh3D, inspired by *empet* post (https://community.plotly.com/t/how-to-do-a-3d-bar-chart-if-possible/32287/2)
 
 Code is automatically tested via GitHub actions for python 3.6 to python 3.11 on ubuntu. I personally develop on
@@ -86,7 +86,7 @@ More documentation about parameters can be found here or in the barchart.py file
 
 packed charts
 
-**step** : Distance between two barcharts
+**step** : Distance between two bar charts
 
 **color** : Axis to create color, possible parameters are
 
