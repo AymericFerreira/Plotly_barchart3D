@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import itertools
+
 import numpy as np
 import pandas as pd
 import plotly.express as px
@@ -43,8 +44,10 @@ def create_z_grid(len_x_df_uniq, len_y_df_uniq, z_df):
     return z_temp_df
 
 
-def figure_layout(fig, x_legend, x_df, y_legend, y_df, x_min, len_x_df_uniq, x_title, y_title, len_y_df_uniq,
-                  z_legend, z_title, title):
+def figure_layout(
+    fig, x_legend, x_df, y_legend, y_df, x_min, len_x_df_uniq, x_title, y_title, len_y_df_uniq,
+    z_legend, z_title, title,
+):
     y_min = 0
 
     fig.update_layout(
@@ -83,7 +86,7 @@ def figure_layout(fig, x_legend, x_df, y_legend, y_df, x_min, len_x_df_uniq, x_t
 def bar_charts_from_sparse_array(
         x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1, color='x',
         x_legend='auto', y_legend='auto', z_legend='auto', flat_shading=True,
-        x_title='', y_title='', z_title='', hover_info='z', title=''
+        x_title='', y_title='', z_title='', hover_info='z', title='',
 ):
     """
     Convert a dataframe in 3D barchart similar to matplotlib ones
@@ -145,11 +148,19 @@ def bar_charts_from_sparse_array(
             z_max = z_temp_df[idx * len_x_df_uniq + idx2]
 
             if z_max is not None:
-                mesh_list.append(generate_mesh(x_min, x_max, y_min, y_max, z_min, z_max, color_value,
-                                               flat_shading, hover_info))
+                mesh_list.append(
+                    generate_mesh(
+                        x_min, x_max, y_min, y_max, z_min, z_max, color_value,
+                        flat_shading, hover_info,
+                    ),
+                )
             else:
-                mesh_list.append(generate_mesh(x_min, x_max, y_min, y_max, z_min, z_max, color_value,
-                                               flat_shading, hover_info, opacity=0.01))
+                mesh_list.append(
+                    generate_mesh(
+                        x_min, x_max, y_min, y_max, z_min, z_max, color_value,
+                        flat_shading, hover_info, opacity=0.01,
+                    ),
+                )
             x_min += 2 * step
         y_min += 2 * step
         x_min = 0
@@ -164,8 +175,10 @@ def bar_charts_from_sparse_array(
     if z_legend == 'auto':
         z_legend = None
 
-    fig = figure_layout(fig, x_legend, x_df, y_legend, y_df, x_min, len_x_df_uniq, x_title, y_title, len_y_df_uniq,
-                        z_legend, z_title, title)
+    fig = figure_layout(
+        fig, x_legend, x_df, y_legend, y_df, x_min, len_x_df_uniq, x_title, y_title, len_y_df_uniq,
+        z_legend, z_title, title,
+    )
 
     return fig
 
@@ -231,9 +244,12 @@ def bar_charts3d_from_array(
             x_max = x_min + step
             y_max = y_min + step
             z_max = z_df[idx + idx2 * len_x_df_uniq]
-            mesh_list.append(generate_mesh(x_min, x_max, y_min, y_max, z_min, z_max, color_value, flat_shading,
-                                           hover_info)
-                             )
+            mesh_list.append(
+                generate_mesh(
+                    x_min, x_max, y_min, y_max, z_min, z_max, color_value, flat_shading,
+                    hover_info,
+                ),
+            )
             x_min += 2 * step
         y_min += 2 * step
         x_min = 0
@@ -249,8 +265,10 @@ def bar_charts3d_from_array(
 
     fig = go.Figure(mesh_list)
 
-    fig = figure_layout(fig, x_legend, x_df, y_legend, y_df, x_min, len_x_df_uniq, x_title, y_title, len_y_df_uniq,
-                        z_legend, z_title, title)
+    fig = figure_layout(
+        fig, x_legend, x_df, y_legend, y_df, x_min, len_x_df_uniq, x_title, y_title, len_y_df_uniq,
+        z_legend, z_title, title,
+    )
 
     return fig
 
@@ -263,8 +281,12 @@ def verify_input(x, y, z):
         return True
     if len(x) == len(y) == len(z):
         return True
-    raise (ValueError(f'Input arguments are not matching, received x:{len(x)}, y:{len(y)}, z:{len(z)}, expected x*y=z '
-                      f'or x=y=z'))
+    raise (
+        ValueError(
+            f'Input arguments are not matching, received x:{len(x)}, y:{len(y)}, z:{len(z)}, expected x*y=z '
+            f'or x=y=z',
+        )
+    )
 
 
 def plotly_bar_charts_3d(
@@ -322,7 +344,7 @@ if __name__ == '__main__':
     accuracies = [0.9727, 0.9994, 0.9994, 0.9995, 0.9995]
     plotly_bar_charts_3d(
         features, neighbours, accuracies,
-        x_title='Features', y_title='Neighbours', z_title='Accuracy'
+        x_title='Features', y_title='Neighbours', z_title='Accuracy',
     ).show()
     xdf = pd.Series([1, 10])
     ydf = pd.Series([2, 4])
