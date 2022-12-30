@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import pathlib
+
 import numpy as np
 import pandas as pd
 import pytest
@@ -16,8 +18,7 @@ def test_array_from_barchart():
         features, neighbours, accuracies,
         x_title='Features', y_title='Neighbours', z_title='Accuracy',
     ).__str__()
-    with open('tests/truth_array_from_barchart.txt') as f:
-        truth = f.read()
+    truth = pathlib.Path('tests/truth_array_from_barchart.txt').read_text()
     assert (fig.__str__() == truth)
 
     features2 = pd.Series([2, 3, 5, 10, 20])
@@ -474,27 +475,12 @@ def test_sparse_from_barchart_not_unique():
     ydf = [2, 2]
     zdf = [10, 30, 20, 20]
     fig = plotly_bar_charts_3d(xdf, ydf, zdf, color='x+y')
+    truth = pathlib.Path(
+        'tests/truth_sparse_from_barchart_not_unique.txt',
+    ).read_text()
 
     assert (
-        fig.__str__() == """Figure({
-    'data': [{'color': '#636EFA',
-              'flatshading': True,
-              'hoverinfo': 'z',
-              'hovertext': 'text',
-              'i': [7, 0, 0, 0, 4, 4, 6, 6, 4, 0, 3, 2],
-              'j': [3, 4, 1, 2, 5, 6, 5, 2, 0, 1, 6, 3],
-              'k': [0, 7, 2, 3, 6, 7, 1, 1, 5, 5, 7, 6],
-              'opacity': 1,
-              'type': 'mesh3d',
-              'x': [0, 0, 1, 1, 0, 0, 1, 1],
-              'y': [0, 1, 1, 0, 0, 1, 1, 0],
-              'z': [8.0, 8.0, 8.0, 8.0, 10, 10, 10, 10]}],
-    'layout': {'scene': {'xaxis': {'tickmode': 'array', 'ticktext': ['1'], 'tickvals': array([0]), 'title': {'text': ''}},
-                         'yaxis': {'tickmode': 'array', 'ticktext': ['2'], 'tickvals': array([0]), 'title': {'text': ''}},
-                         'zaxis': {'tickmode': 'array', 'title': {'text': ''}}},
-               'template': '...',
-               'title': {'text': ''}}
-})"""
+        fig.__str__() == truth
     )
 
     xdf2 = pd.Series([1, 1])
@@ -515,5 +501,8 @@ def test_verify_input():
     zdf = pd.Series([10, 30, 20, 45])
     assert verify_input(xdf, ydf, zdf) is True
     with pytest.raises(ValueError, match='Input arguments are not matching.'):
-        verify_input(np.random.random(
-            10), np.random.random(7), np.random.random(11))
+        verify_input(
+            np.random.random(
+                10,
+            ), np.random.random(7), np.random.random(11),
+        )
