@@ -1,0 +1,19 @@
+Figure({
+    'data': [{'color': '#636EFA',
+              'flatshading': True,
+              'hoverinfo': 'z',
+              'hovertext': 'text',
+              'i': [7, 0, 0, 0, 4, 4, 6, 6, 4, 0, 3, 2],
+              'j': [3, 4, 1, 2, 5, 6, 5, 2, 0, 1, 6, 3],
+              'k': [0, 7, 2, 3, 6, 7, 1, 1, 5, 5, 7, 6],
+              'opacity': 1,
+              'type': 'mesh3d',
+              'x': [0, 0, 1, 1, 0, 0, 1, 1],
+              'y': [0, 1, 1, 0, 0, 1, 1, 0],
+              'z': [8.0, 8.0, 8.0, 8.0, 10, 10, 10, 10]}],
+    'layout': {'scene': {'xaxis': {'tickmode': 'array', 'ticktext': ['1'], 'tickvals': array([0]), 'title': {'text': ''}},
+                         'yaxis': {'tickmode': 'array', 'ticktext': ['2'], 'tickvals': array([0]), 'title': {'text': ''}},
+                         'zaxis': {'tickmode': 'array', 'title': {'text': ''}}},
+               'template': '...',
+               'title': {'text': ''}}
+})
