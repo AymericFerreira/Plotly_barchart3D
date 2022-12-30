@@ -333,5 +333,6 @@ Figure({
                                    'tickvals': array([0, 2, 4, 6, 8]),
                                    'title': {'text': 'Neighbours'}},
                          'zaxis': {'tickmode': 'array', 'title': {'text': 'Accuracy'}}},
-               'template': '...'}
+               'template': '...',
+               'title': {'text': ''}}
 })

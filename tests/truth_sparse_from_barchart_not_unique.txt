@@ -14,5 +14,6 @@ Figure({
     'layout': {'scene': {'xaxis': {'tickmode': 'array', 'ticktext': ['1'], 'tickvals': array([0]), 'title': {'text': ''}},
                          'yaxis': {'tickmode': 'array', 'ticktext': ['2'], 'tickvals': array([0]), 'title': {'text': ''}},
                          'zaxis': {'tickmode': 'array', 'title': {'text': ''}}},
-               'template': '...'}
+               'template': '...',
+               'title': {'text': ''}}
 })
