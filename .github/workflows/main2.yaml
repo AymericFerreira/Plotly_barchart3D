@@ -1,23 +1,16 @@
-name: develop actions
-
 on:
   pull_request:
   push:
-    branches: [olddevelop]
+    branches: [main, develop]
 
 jobs:
-  pre-commit:
+  main:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        python-version: [ "3.6", "3.7", "3.8", "3.9", "3.10", "3.11" ]
-
     steps:
     - uses: actions/checkout@v3
-    - uses: actions/setup-python@v3
-    - name: set PY
-      run: echo "PY=$(python -VV | sha256sum | cut -d' ' -f1)" >> $GITHUB_ENV
+    - uses: actions/setup-python@v4
+      with:
+        python-version: 3.10
     - name: Install packages
       run: |
         python -m pip install --upgrade pip
@@ -27,5 +20,3 @@ jobs:
     - uses: pre-commit/action@v3.0.0
     - uses: pre-commit-ci/lite-action@v1.0.0
       if: always()
-      with:
-        msg: apply code formatting

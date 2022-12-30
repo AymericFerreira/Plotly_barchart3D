@@ -3,7 +3,7 @@ name: main actions
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [oldmain]
 
 jobs:
   pre-commit:
@@ -26,6 +26,7 @@ jobs:
     - name : Run Python test
       run: pytest test_barchart.py
     - uses: pre-commit/action@v3.0.0
-    - uses: ./.
-      name: Run pre-commit-ci/lite-action@v1.0.0
+    - uses: pre-commit-ci/lite-action@v1.0.0
       if: always()
+      with:
+        msg: apply code formatting
