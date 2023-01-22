@@ -27,38 +27,38 @@ Some examples :
 Minimal example
 
 ```
-from barchart import plotly_barcharts_3d
+from barchart import plotly_bar_charts_3d
 import pandas as pd
 
 xdf = pd.Series([1, 10])
 ydf = pd.Series([2, 4])
 zdf = pd.Series([10, 30, 20, 45])
 
-fig = plotly_barcharts_3d(xdf, ydf, zdf, color='x+y')
+fig = plotly_bar_charts_3d(xdf, ydf, zdf, color='x+y')
 fig.show()
 ```
 ![Image small xy](https://github.com/AymericFerreira/Plotly_barchart3D/blob/main/examples/small_xy.png?raw=true)
 
 It can also be used to generate bigger graph and add legends.
 ```
-from barchart import plotly_barcharts_3d
+from barchart import plotly_bar_charts_3d
 import pandas as pd
 
 df = pd.read_csv('examples/dataBar.csv')
 
-fig = plotly_barcharts_3d(df['Gamma'], df['C'], df['score 1'], x_title='Gamma', y_title='C', color='x')
+fig = plotly_bar_charts_3d(df['Gamma'], df['C'], df['score 1'], x_title='Gamma', y_title='C', color='x')
 fig.show()
 ```
 
 ![Image medium x](https://github.com/AymericFerreira/Plotly_barchart3D/blob/main/examples/medium_x.png?raw=true)
 
 ```
-from barchart import plotly_barcharts_3d
+from barchart import plotly_bar_charts_3d
 import pandas as pd
 
 df = pd.read_csv('examples/dataBar.csv')
 
-fig = plotly_barcharts_3d(df['Gamma'], df['C'], df['score 1'], x_title='Gamma', y_title='C', color='x+y')
+fig = plotly_bar_charts_3d(df['Gamma'], df['C'], df['score 1'], x_title='Gamma', y_title='C', color='x+y')
 fig.show()
 ```
 
