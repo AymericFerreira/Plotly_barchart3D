@@ -292,6 +292,13 @@ def verify_input(x, y, z) -> bool:
     )
 
 
+def convert_to_str(x: list[str]):
+    """"
+    Convert a list to a string
+    """
+    return [str(x) for x in x]
+
+
 def plotly_bar_charts_3d(
         x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1, color='x',
         x_legend='auto', y_legend='auto', z_legend='auto', flat_shading=True,
@@ -334,7 +341,7 @@ def plotly_bar_charts_3d(
             hover_info=hover_info,
             title=title,
         )
-        if len(z_df) == (len(x_df) * len(y_df))
+        if len(z_df) == (len(x_df) * len(y_df)) or (len(set(x_df)) + len(set(y_df))) == len(set(z_df))
         else bar_charts_from_sparse_array(
             x_df,
             y_df,
@@ -370,3 +377,6 @@ if __name__ == '__main__':
         features, neighbours, accuracies,
         x_title='Features', y_title='Neighbours', z_title='Accuracy',
     ).show()
+    df = pd.read_csv("examples/dataExample.csv")
+    fig = plotly_bar_charts_3d(df['Gamma'], df['C'], df['score 1'], x_title='Gamma', y_title='C', color='y')
+    fig.show()

@@ -506,3 +506,31 @@ def test_verify_input():
                 10,
             ), np.random.random(7), np.random.random(11),
         )
+
+
+def test_real_dataset():
+    df = pd.read_csv('examples/dataExample.csv')
+    fig = plotly_bar_charts_3d(df['Gamma'], df['C'], df['score 1'], x_title='Gamma', y_title='C', color='x+y')
+    truth = pathlib.Path(
+        'tests/truth_dataset.txt',
+    ).read_text()
+
+    assert (
+        fig.__str__() == truth
+    )
+
+    fig = plotly_bar_charts_3d(df['Gamma'], df['C'], df['score 1'], x_title='Gamma', y_title='C', color='x')
+    truth = pathlib.Path(
+            'tests/truth_dataset_x.txt',
+        ).read_text()
+    assert (
+            fig.__str__() == truth
+    )
+
+    fig = plotly_bar_charts_3d(df['Gamma'], df['C'], df['score 1'], x_title='Gamma', y_title='C', color='y')
+    truth = pathlib.Path(
+        'tests/truth_dataset_y.txt',
+    ).read_text()
+    assert (
+            fig.__str__() == truth
+    )
