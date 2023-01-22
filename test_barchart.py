@@ -510,7 +510,8 @@ def test_verify_input():
 
 def test_real_dataset():
     df = pd.read_csv('examples/dataExample.csv')
-    fig = plotly_bar_charts_3d(df['Gamma'], df['C'], df['score 1'], x_title='Gamma', y_title='C', color='x+y')
+    fig = plotly_bar_charts_3d(df['Gamma'], df['C'], df['score 1'],
+                               x_title='Gamma', y_title='C', color='x+y')
     truth = pathlib.Path(
         'tests/truth_dataset.txt',
     ).read_text()
@@ -519,7 +520,8 @@ def test_real_dataset():
         fig.__str__() == truth
     )
 
-    fig = plotly_bar_charts_3d(df['Gamma'], df['C'], df['score 1'], x_title='Gamma', y_title='C', color='x')
+    fig = plotly_bar_charts_3d(df['Gamma'], df['C'], df['score 1'],
+                               x_title='Gamma', y_title='C', color='x')
     truth = pathlib.Path(
             'tests/truth_dataset_x.txt',
         ).read_text()
@@ -527,7 +529,8 @@ def test_real_dataset():
             fig.__str__() == truth
     )
 
-    fig = plotly_bar_charts_3d(df['Gamma'], df['C'], df['score 1'], x_title='Gamma', y_title='C', color='y')
+    fig = plotly_bar_charts_3d(df['Gamma'], df['C'], df['score 1'],
+                               x_title='Gamma', y_title='C', color='y')
     truth = pathlib.Path(
         'tests/truth_dataset_y.txt',
     ).read_text()
