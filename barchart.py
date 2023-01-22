@@ -377,6 +377,9 @@ if __name__ == '__main__':
         features, neighbours, accuracies,
         x_title='Features', y_title='Neighbours', z_title='Accuracy',
     ).show()
-    df = pd.read_csv("examples/dataExample.csv")
-    fig = plotly_bar_charts_3d(df['Gamma'], df['C'], df['score 1'], x_title='Gamma', y_title='C', color='y')
+    df = pd.read_csv('examples/dataExample.csv')
+    fig = plotly_bar_charts_3d(
+        df['Gamma'], df['C'], df['score 1'], x_title='Gamma', y_title='C',
+        color='y',
+    )
     fig.show()
