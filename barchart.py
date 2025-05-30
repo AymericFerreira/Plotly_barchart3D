@@ -36,7 +36,7 @@ def generate_mesh(x_min, x_max, y_min, y_max, z_min, z_max, color_value, flat_sh
 def create_z_grid(len_x_df_uniq, len_y_df_uniq, z_df):
     z_temp_df = []
     z_index = 0
-    
+
     for y in range(len_y_df_uniq):
         for x in range(len_x_df_uniq):
             if z_index < len(z_df):
@@ -204,7 +204,7 @@ def bar_charts_from_paired_data(
     """
     if z_min == 'auto':
         z_min = 0.8 * min(z_df)
-    
+
     mesh_list = []
     colors = px.colors.qualitative.Plotly
     color_value = 0
@@ -216,21 +216,21 @@ def bar_charts_from_paired_data(
     # Get unique values for axis labels
     x_df_uniq = sorted(x_df.unique())
     y_df_uniq = sorted(y_df.unique())
-    
+
     # Create mapping from values to positions
     x_positions = {val: idx * 2 for idx, val in enumerate(x_df_uniq)}
     y_positions = {val: idx * 2 for idx, val in enumerate(y_df_uniq)}
-    
+
     # Plot each bar at its mapped position
     for idx in range(len(x_df)):
         x_val = x_df.iloc[idx]
         y_val = y_df.iloc[idx]
         z_val = z_df.iloc[idx]
-        
+
         # Get position indices
         x_pos = x_positions[x_val]
         y_pos = y_positions[y_val]
-        
+
         # Determine color based on color scheme
         if color == 'x':
             x_idx = x_df_uniq.index(x_val)
@@ -240,7 +240,7 @@ def bar_charts_from_paired_data(
             color_value = colors[y_idx % 9]
         elif color == 'x+y':
             color_value = colors[idx % 9]
-        
+
         # Create bar
         mesh_list.append(
             generate_mesh(
@@ -248,9 +248,9 @@ def bar_charts_from_paired_data(
                 color_value, flat_shading, hover_info,
             ),
         )
-    
+
     fig = go.Figure(mesh_list)
-    
+
     # Set up legends
     if x_legend == 'auto':
         x_legend = [str(x) for x in x_df_uniq]
@@ -258,13 +258,13 @@ def bar_charts_from_paired_data(
         y_legend = [str(y) for y in y_df_uniq]
     if z_legend == 'auto':
         z_legend = None
-    
+
     # Apply layout
     fig = figure_layout(
         fig, x_legend, y_legend, 0, len(x_df_uniq), x_title, y_title, len(y_df_uniq),
         z_legend, z_title, title,
     )
-    
+
     return fig
 
 
@@ -403,15 +403,15 @@ def plotly_bar_charts_3d(
         ).show()
     """
     verify_input(x_df, y_df, z_df)
-    
+
     # Convert to pandas Series to use unique() method
     x_series = pd.Series(x_df)
     y_series = pd.Series(y_df)
-    
+
     # Check if we have a full grid (all combinations of unique x and y values)
     unique_x = x_series.nunique()
     unique_y = y_series.nunique()
-    
+
     # Case 1: Full grid data - we have z values for every combination of unique x and y
     if len(z_df) == unique_x * unique_y and len(x_series) == len(y_series) == len(z_df):
         # Check if this is actually a full grid by seeing if we have all combinations
@@ -420,7 +420,7 @@ def plotly_bar_charts_3d(
         y_vals = y_series.unique()
         expected_pairs = {(x, y) for x in x_vals for y in y_vals}
         actual_pairs = set(zip(x_series, y_series))
-        
+
         if expected_pairs == actual_pairs:
             # Full grid data - use array version
             return bar_charts3d_from_array(
@@ -442,7 +442,7 @@ def plotly_bar_charts_3d(
                 hover_info=hover_info,
                 title=title,
             )
-    
+
     # Case 2: Paired data - each (x[i], y[i], z[i]) represents one bar
     elif len(x_series) == len(y_series) == len(z_df):
         # Use paired data version
@@ -465,7 +465,7 @@ def plotly_bar_charts_3d(
             hover_info=hover_info,
             title=title,
         )
-    
+
     # Case 3: Sparse array data
     else:
         # Sparse data - use sparse array version
