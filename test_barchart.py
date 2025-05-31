@@ -83,8 +83,8 @@ class TestBarPositioning:
         assert len(fig.data) == 3
 
         # Check x-axis labels match our unique values
-        assert fig.layout.scene.xaxis.ticktext == ('2', '5', '10')
-        assert fig.layout.scene.yaxis.ticktext == ('3', '7', '11')
+        assert fig.layout.scene.xaxis.ticktext == ("2", "5", "10")
+        assert fig.layout.scene.yaxis.ticktext == ("3", "7", "11")
 
         # Verify bar positions (they should be at 0, 2, 4 for 3 values)
         expected_x_positions = [0, 2, 4]
@@ -124,7 +124,7 @@ class TestColorSchemes:
         y = [3, 4, 3, 4]
         z = [10, 20, 30, 40]
 
-        fig = plotly_bar_charts_3d(x, y, z, color='x')
+        fig = plotly_bar_charts_3d(x, y, z, color="x")
 
         # First two bars (same x) should have same color
         assert fig.data[0].color == fig.data[1].color
@@ -140,7 +140,7 @@ class TestColorSchemes:
         y = [3, 4, 3, 4]
         z = [10, 20, 30, 40]
 
-        fig = plotly_bar_charts_3d(x, y, z, color='y')
+        fig = plotly_bar_charts_3d(x, y, z, color="y")
 
         # For full grid data, bars are ordered by unique x values then unique y values
         # So with x=[1,2] and y=[3,4], the order is:
@@ -163,7 +163,7 @@ class TestColorSchemes:
         y = [4, 5, 6]
         z = [10, 20, 30]
 
-        fig = plotly_bar_charts_3d(x, y, z, color='x+y')
+        fig = plotly_bar_charts_3d(x, y, z, color="x+y")
 
         # Each bar should have a different color
         colors = [mesh.color for mesh in fig.data]
@@ -179,17 +179,17 @@ class TestArrayHandling:
         ydf = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
 
         # Create sparse array with specific values
-        z = np.array([[None]*15 for i in range(4)])
-        z[0, 6] = 64   # x=1, y=7
-        z[0, 9] = 32   # x=1, y=10
-        z[1, 8] = 38   # x=2, y=9
+        z = np.array([[None] * 15 for i in range(4)])
+        z[0, 6] = 64  # x=1, y=7
+        z[0, 9] = 32  # x=1, y=10
+        z[1, 8] = 38  # x=2, y=9
         z[1, 10] = 23  # x=2, y=11
         z[2, 10] = 65  # x=3, y=11
         z[2, 12] = 34  # x=3, y=13
         z[3, 12] = 20  # x=4, y=13
-        z[3, 14] = 9   # x=4, y=15
+        z[3, 14] = 9  # x=4, y=15
 
-        z_flat = z.flatten('F')
+        z_flat = z.flatten("F")
         zdf = pd.Series(z_flat)
 
         fig = plotly_bar_charts_3d(xdf, ydf, zdf, z_min=0)
@@ -216,15 +216,12 @@ class TestAxisLabels:
         z = [10, 20, 30]
 
         fig = plotly_bar_charts_3d(
-            x, y, z,
-            x_title='Features',
-            y_title='Neighbours',
-            z_title='Accuracy'
+            x, y, z, x_title="Features", y_title="Neighbours", z_title="Accuracy"
         )
 
-        assert fig.layout.scene.xaxis.title.text == 'Features'
-        assert fig.layout.scene.yaxis.title.text == 'Neighbours'
-        assert fig.layout.scene.zaxis.title.text == 'Accuracy'
+        assert fig.layout.scene.xaxis.title.text == "Features"
+        assert fig.layout.scene.yaxis.title.text == "Neighbours"
+        assert fig.layout.scene.zaxis.title.text == "Accuracy"
 
     def test_auto_legends(self):
         """Test automatic legend generation"""
@@ -235,8 +232,8 @@ class TestAxisLabels:
         fig = plotly_bar_charts_3d(x, y, z)
 
         # Should convert values to strings
-        assert fig.layout.scene.xaxis.ticktext == ('10', '20', '30')
-        assert fig.layout.scene.yaxis.ticktext == ('100', '200', '300')
+        assert fig.layout.scene.xaxis.ticktext == ("10", "20", "30")
+        assert fig.layout.scene.yaxis.ticktext == ("100", "200", "300")
 
 
 class TestEdgeCases:
@@ -275,7 +272,7 @@ class TestEdgeCases:
         y = [3, 4]
         z = [100, 200]
 
-        fig = plotly_bar_charts_3d(x, y, z, z_min='auto')
+        fig = plotly_bar_charts_3d(x, y, z, z_min="auto")
 
         # z_min should be 0.8 * min(z) = 0.8 * 100 = 80
         expected_z_min = 80
