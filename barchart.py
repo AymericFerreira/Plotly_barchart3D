@@ -491,11 +491,14 @@ def plotly_bar_charts_3d(
 
 
 if __name__ == '__main__':
+    # Example 1, 2x2 grid full
     xdf = pd.Series([1, 10])
     ydf = pd.Series([2, 4])
     zdf = pd.Series([10, 30, 20, 45])
     fig = plotly_bar_charts_3d(xdf, ydf, zdf, color='x+y')
     fig.show()
+
+    # Example 2, 5x5 grid with only 5 values
     features = [2, 3, 5, 10, 20]
     neighbours = [31, 24, 10, 28, 48]
     accuracies = [0.9727, 0.9994, 0.9994, 0.9995, 0.9995]
@@ -503,9 +506,12 @@ if __name__ == '__main__':
         features, neighbours, accuracies,
         x_title='Features', y_title='Neighbours', z_title='Accuracy',
     ).show()
+
+    # Example 3, 5x5 grid with 25 values
     df = pd.read_csv('examples/dataExample.csv')
     fig = plotly_bar_charts_3d(
         df['Gamma'], df['C'], df['score 1'], x_title='Gamma', y_title='C',
         color='y',
     )
     fig.show()
+
