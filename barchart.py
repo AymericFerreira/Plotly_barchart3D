@@ -1,26 +1,53 @@
 from __future__ import annotations
 
-import itertools
-
 import numpy as np
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
 
-def generate_mesh(x_min, x_max, y_min, y_max, z_min, z_max, color_value, flat_shading, hover_info, opacity: float = 1):
+def generate_mesh(
+    x_min,
+    x_max,
+    y_min,
+    y_max,
+    z_min,
+    z_max,
+    color_value,
+    flat_shading,
+    hover_info,
+    opacity: float = 1,
+):
     return go.Mesh3d(
         x=[
-            x_min, x_min, x_max, x_max,
-            x_min, x_min, x_max, x_max,
+            x_min,
+            x_min,
+            x_max,
+            x_max,
+            x_min,
+            x_min,
+            x_max,
+            x_max,
         ],
         y=[
-            y_min, y_max, y_max, y_min,
-            y_min, y_max, y_max, y_min,
+            y_min,
+            y_max,
+            y_max,
+            y_min,
+            y_min,
+            y_max,
+            y_max,
+            y_min,
         ],
         z=[
-            z_min, z_min, z_min, z_min,
-            z_max, z_max, z_max, z_max,
+            z_min,
+            z_min,
+            z_min,
+            z_min,
+            z_max,
+            z_max,
+            z_max,
+            z_max,
         ],
         color=color_value,
         i=[7, 0, 0, 0, 4, 4, 6, 6, 4, 0, 3, 2],
@@ -48,9 +75,17 @@ def create_z_grid(len_x_df_uniq, len_y_df_uniq, z_df):
 
 
 def figure_layout(
-        fig: go.Figure,
-        x_legend: str, y_legend, x_min, len_x_df_uniq, x_title, y_title, len_y_df_uniq,
-        z_legend, z_title, title,
+    fig: go.Figure,
+    x_legend: str,
+    y_legend,
+    x_min,
+    len_x_df_uniq,
+    x_title,
+    y_title,
+    len_y_df_uniq,
+    z_legend,
+    z_title,
+    title,
 ):
     y_min = 0
 
@@ -88,9 +123,23 @@ def figure_layout(
 
 
 def bar_charts_from_sparse_array(
-        x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1, color='x',
-        x_legend='auto', y_legend='auto', z_legend='auto', flat_shading=True,
-        x_title='', y_title='', z_title='', hover_info='z', title='',
+    x_df,
+    y_df,
+    z_df,
+    x_min=0,
+    y_min=0,
+    z_min='auto',
+    step=1,
+    color='x',
+    x_legend='auto',
+    y_legend='auto',
+    z_legend='auto',
+    flat_shading=True,
+    x_title='',
+    y_title='',
+    z_title='',
+    hover_info='z',
+    title='',
 ) -> go.Figure:
     """
     Convert a dataframe in 3D barchart similar to matplotlib ones
@@ -105,8 +154,8 @@ def bar_charts_from_sparse_array(
     :param z_df: Serie or list  of data corresponding to height of the bar chart
     :param x_min: Starting position for x-axis
     :param y_min: Starting position for y-axis
-    :param z_min: Minimum value of the barchart, if set to auto minimum value is 0.8 * minimum of z_df to obtain more
-    packed charts
+    :param z_min: Minimum value of the barchart, if set to auto minimum value is 0.8 * minimum
+                  of z_df to obtain more packed charts
     :param step: Distance between two bar charts
     :param color: Axis to create color, possible parameters are
     x for a different color for each change of x
@@ -156,15 +205,30 @@ def bar_charts_from_sparse_array(
             if z_max is not None:
                 mesh_list.append(
                     generate_mesh(
-                        x_min, x_max, y_min, y_max, z_min, z_max, color_value,
-                        flat_shading, hover_info,
+                        x_min,
+                        x_max,
+                        y_min,
+                        y_max,
+                        z_min,
+                        z_max,
+                        color_value,
+                        flat_shading,
+                        hover_info,
                     ),
                 )
             else:
                 mesh_list.append(
                     generate_mesh(
-                        x_min, x_max, y_min, y_max, z_min, z_max, color_value,
-                        flat_shading, hover_info, opacity=0.01,
+                        x_min,
+                        x_max,
+                        y_min,
+                        y_max,
+                        z_min,
+                        z_max,
+                        color_value,
+                        flat_shading,
+                        hover_info,
+                        opacity=0.01,
                     ),
                 )
             x_min += 2 * step
@@ -182,17 +246,40 @@ def bar_charts_from_sparse_array(
         z_legend = None
 
     fig = figure_layout(
-        fig, x_legend, y_legend, x_min, len_x_df_uniq, x_title, y_title, len_y_df_uniq,
-        z_legend, z_title, title,
+        fig,
+        x_legend,
+        y_legend,
+        x_min,
+        len_x_df_uniq,
+        x_title,
+        y_title,
+        len_y_df_uniq,
+        z_legend,
+        z_title,
+        title,
     )
 
     return fig
 
 
 def bar_charts_from_paired_data(
-        x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1, color='x',
-        x_legend='auto', y_legend='auto', z_legend='auto', flat_shading=True,
-        x_title='', y_title='', z_title='', hover_info='z', title='',
+    x_df,
+    y_df,
+    z_df,
+    x_min=0,
+    y_min=0,
+    z_min='auto',
+    step=1,
+    color='x',
+    x_legend='auto',
+    y_legend='auto',
+    z_legend='auto',
+    flat_shading=True,
+    x_title='',
+    y_title='',
+    z_title='',
+    hover_info='z',
+    title='',
 ) -> go.Figure:
     """
     Convert paired (x,y,z) data points into 3D bar charts
@@ -244,8 +331,15 @@ def bar_charts_from_paired_data(
         # Create bar
         mesh_list.append(
             generate_mesh(
-                x_pos, x_pos + step, y_pos, y_pos + step, z_min, z_val,
-                color_value, flat_shading, hover_info,
+                x_pos,
+                x_pos + step,
+                y_pos,
+                y_pos + step,
+                z_min,
+                z_val,
+                color_value,
+                flat_shading,
+                hover_info,
             ),
         )
 
@@ -261,17 +355,40 @@ def bar_charts_from_paired_data(
 
     # Apply layout
     fig = figure_layout(
-        fig, x_legend, y_legend, 0, len(x_df_uniq), x_title, y_title, len(y_df_uniq),
-        z_legend, z_title, title,
+        fig,
+        x_legend,
+        y_legend,
+        0,
+        len(x_df_uniq),
+        x_title,
+        y_title,
+        len(y_df_uniq),
+        z_legend,
+        z_title,
+        title,
     )
 
     return fig
 
 
 def bar_charts3d_from_array(
-        x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1, color='x',
-        x_legend='auto', y_legend='auto', z_legend='auto', flat_shading=True,
-        x_title='', y_title='', z_title='', hover_info='z', title='',
+    x_df,
+    y_df,
+    z_df,
+    x_min=0,
+    y_min=0,
+    z_min='auto',
+    step=1,
+    color='x',
+    x_legend='auto',
+    y_legend='auto',
+    z_legend='auto',
+    flat_shading=True,
+    x_title='',
+    y_title='',
+    z_title='',
+    hover_info='z',
+    title='',
 ) -> go.Figure:
     """
     Convert a dataframe in 3D bar charts similar to matplotlib ones
@@ -284,8 +401,8 @@ def bar_charts3d_from_array(
     :param z_df: Serie of data corresponding to height of the bar chart
     :param x_min: Starting position for x-axis
     :param y_min: Starting position for y-axis
-    :param z_min: Minimum value of the barchart, if set to auto minimum value is 0.8 * minimum of z_df to obtain more
-    packed charts
+    :param z_min: Minimum value of the barchart, if set to auto minimum value is 0.8 * minimum
+                  of z_df to obtain more packed charts
     :param step: Distance between two bar charts
     :param color: Axis to create color, possible parameters are
     x for a different color for each change of x
@@ -331,7 +448,14 @@ def bar_charts3d_from_array(
             z_max = z_df[idx + idx2 * len_x_df_uniq]
             mesh_list.append(
                 generate_mesh(
-                    x_min, x_max, y_min, y_max, z_min, z_max, color_value, flat_shading,
+                    x_min,
+                    x_max,
+                    y_min,
+                    y_max,
+                    z_min,
+                    z_max,
+                    color_value,
+                    flat_shading,
                     hover_info,
                 ),
             )
@@ -351,15 +475,24 @@ def bar_charts3d_from_array(
     fig = go.Figure(mesh_list)
 
     fig = figure_layout(
-        fig, x_legend, y_legend, x_min, len_x_df_uniq, x_title, y_title, len_y_df_uniq,
-        z_legend, z_title, title,
+        fig,
+        x_legend,
+        y_legend,
+        x_min,
+        len_x_df_uniq,
+        x_title,
+        y_title,
+        len_y_df_uniq,
+        z_legend,
+        z_title,
+        title,
     )
 
     return fig
 
 
 def verify_input(x, y, z) -> bool:
-    """"
+    """ "
     Verify that input is valid
     """
     if len(x) * len(y) == len(z):
@@ -368,23 +501,37 @@ def verify_input(x, y, z) -> bool:
         return True
     raise (
         ValueError(
-            f'Input arguments are not matching, received x:{len(x)}, y:{len(y)}, z:{len(z)}, expected x*y=z '
-            f'or x=y=z',
+            f"Input arguments are not matching, received x:{len(x)}, y:{len(y)}, "
+            f"z:{len(z)}, expected x*y=z or x=y=z",
         )
     )
 
 
 def convert_to_str(x: list[str]):
-    """"
+    """ "
     Convert a list to a string
     """
     return [str(x) for x in x]
 
 
 def plotly_bar_charts_3d(
-        x_df, y_df, z_df, x_min=0, y_min=0, z_min='auto', step=1, color='x',
-        x_legend='auto', y_legend='auto', z_legend='auto', flat_shading=True,
-        x_title='', y_title='', z_title='', hover_info='z', title='',
+    x_df,
+    y_df,
+    z_df,
+    x_min=0,
+    y_min=0,
+    z_min='auto',
+    step=1,
+    color='x',
+    x_legend='auto',
+    y_legend='auto',
+    z_legend='auto',
+    flat_shading=True,
+    x_title='',
+    y_title='',
+    z_title='',
+    hover_info='z',
+    title='',
 ):
     """
     Generate a barchart in 3D or a sparse barchart in 3D
@@ -491,21 +638,34 @@ def plotly_bar_charts_3d(
 
 
 if __name__ == '__main__':
+    # Example 1, 2x2 grid full
     xdf = pd.Series([1, 10])
     ydf = pd.Series([2, 4])
     zdf = pd.Series([10, 30, 20, 45])
     fig = plotly_bar_charts_3d(xdf, ydf, zdf, color='x+y')
     fig.show()
+
+    # Example 2, 5x5 grid with only 5 values
     features = [2, 3, 5, 10, 20]
     neighbours = [31, 24, 10, 28, 48]
     accuracies = [0.9727, 0.9994, 0.9994, 0.9995, 0.9995]
     plotly_bar_charts_3d(
-        features, neighbours, accuracies,
-        x_title='Features', y_title='Neighbours', z_title='Accuracy',
+        features,
+        neighbours,
+        accuracies,
+        x_title='Features',
+        y_title='Neighbours',
+        z_title='Accuracy',
     ).show()
+
+    # Example 3, 5x5 grid with 25 values
     df = pd.read_csv('examples/dataExample.csv')
     fig = plotly_bar_charts_3d(
-        df['Gamma'], df['C'], df['score 1'], x_title='Gamma', y_title='C',
+        df['Gamma'],
+        df['C'],
+        df['score 1'],
+        x_title='Gamma',
+        y_title='C',
         color='y',
     )
     fig.show()
