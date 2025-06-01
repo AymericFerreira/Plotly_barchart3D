@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import itertools
-
 import numpy as np
 import pandas as pd
 import plotly.express as px
@@ -156,8 +154,8 @@ def bar_charts_from_sparse_array(
     :param z_df: Serie or list  of data corresponding to height of the bar chart
     :param x_min: Starting position for x-axis
     :param y_min: Starting position for y-axis
-    :param z_min: Minimum value of the barchart, if set to auto minimum value is 0.8 * minimum of z_df to obtain more
-    packed charts
+    :param z_min: Minimum value of the barchart, if set to auto minimum value is 0.8 * minimum
+                  of z_df to obtain more packed charts
     :param step: Distance between two bar charts
     :param color: Axis to create color, possible parameters are
     x for a different color for each change of x
@@ -403,8 +401,8 @@ def bar_charts3d_from_array(
     :param z_df: Serie of data corresponding to height of the bar chart
     :param x_min: Starting position for x-axis
     :param y_min: Starting position for y-axis
-    :param z_min: Minimum value of the barchart, if set to auto minimum value is 0.8 * minimum of z_df to obtain more
-    packed charts
+    :param z_min: Minimum value of the barchart, if set to auto minimum value is 0.8 * minimum
+                  of z_df to obtain more packed charts
     :param step: Distance between two bar charts
     :param color: Axis to create color, possible parameters are
     x for a different color for each change of x
@@ -503,8 +501,8 @@ def verify_input(x, y, z) -> bool:
         return True
     raise (
         ValueError(
-            f"Input arguments are not matching, received x:{len(x)}, y:{len(y)}, z:{len(z)}, expected x*y=z "
-            f"or x=y=z",
+            f"Input arguments are not matching, received x:{len(x)}, y:{len(y)}, "
+            f"z:{len(z)}, expected x*y=z or x=y=z",
         )
     )
 
