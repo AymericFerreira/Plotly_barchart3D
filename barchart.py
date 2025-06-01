@@ -551,7 +551,6 @@ def plotly_bar_charts_3d(
     """
     verify_input(x_df, y_df, z_df)
 
-    # Convert to pandas Series to use unique() method
     x_series = pd.Series(x_df)
     y_series = pd.Series(y_df)
 
